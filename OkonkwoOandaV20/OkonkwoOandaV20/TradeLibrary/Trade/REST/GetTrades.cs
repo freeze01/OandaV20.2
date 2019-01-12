@@ -17,7 +17,13 @@ namespace OkonkwoOandaV20.TradeLibrary.REST
          string uri = ServerUri(EServer.Account) + "accounts/" + accountID + "/trades";
 
          var requestParams = ConvertToDictionary(parameters);
-         if (parameters?.ids.Count > 0)
+         //if (parameters?.ids.Count > 0)
+         if (parameters?.ids?.Count > 0) 
+            // added ? behind ids
+            // in my project i get error becouse parameters.ids == null
+            // i only use this function to get open trades of a certain instrument
+            // so only those parameters ar not null in TradesParameters
+            // maybe it is only a solution for my project but i wanted to let you know this.
             requestParams.Add("ids", GetCommaSeparatedString(parameters.ids));
 
          var response = await MakeRequestAsync<TradesResponse>(uri, "GET", requestParams);
